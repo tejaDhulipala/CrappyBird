@@ -81,6 +81,7 @@ def main(hi_score):
     gravity = 1
     fall_rate = 0.3
     pg.display.set_caption("Crappy Bird")
+    clock = pg.time.Clock()
     while running:
         start = perf_counter()
         # Background
@@ -126,13 +127,11 @@ def main(hi_score):
         show_text(str(hi_score), screen, (245, 75), False)
         # Updating the display every frame
         pg.display.update()
-        # Assuring that the frame rate is 60fps
-        if (dif := perf_counter() - start) < 0.016:
-            sleep(0.016 - dif)
-        else:
-            print("Frame rate is slower than 60fps")
         # Difficulty changing
         speed += 0.0002
+        clock.tick(60)
+        if clock.get_fps() < 45:
+            print(f'performance problems frame rate tanking {clock.get_fps()}')
 
 
 if __name__ == '__main__':
